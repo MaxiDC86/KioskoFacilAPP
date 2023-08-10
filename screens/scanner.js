@@ -7,18 +7,13 @@ import { Product } from "../model/product";
 function Scanner() {
   const navigation = useNavigation();
 
-  function scannerHandler() {
-    const product = new Product("Alfajor", 500, 12341234, 1);
+  async function scannerHandler() {
+    const product = new Product("Galletitas", 1500, 82341234);
 
-    insertProduct(product);
-    getProducts();
+    await insertProduct(product);
     navigation.navigate("Venta Actual");
   }
 
-  async function getProducts() {
-    const products = await fetchProducts();
-    console.log(products);
-  }
   return (
     <View style={styles.container}>
       <Text> ESCANEANDO PRODUCTO!!!</Text>
