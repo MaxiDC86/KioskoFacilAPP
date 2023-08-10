@@ -65,3 +65,18 @@ export function fetchProducts() {
   });
   return promise;
 }
+export function deleteProduct(id) {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `DELETE FROM products WHERE id = ?`,
+        [id],
+        (_, result) => {},
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+  return promise;
+}
