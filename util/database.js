@@ -8,10 +8,10 @@ export function init() {
     database.transaction((tx) => {
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS products (
+                      id INTEGER PRIMARY KEY NOT NULL,
                       title TEXT NOT NULL,
                       price INTEGER NOT NULL,
-                      barCode INTEGER NOT NULL,
-                      id INTEGER PRIMARY KEY NOT NULL
+                      barcode INTEGER NOT NULL
                       )`,
         [],
         () => {
@@ -23,21 +23,18 @@ export function init() {
       );
     });
   });
-
   return promise;
 }
 export function insertProduct(product) {
-  console.log("insertando >>>><>>>>");
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO places (title,price,barCode)  VALUES (?,?,?)`,
+        `INSERT INTO products (title,price,barCode)  VALUES (?,?,?)`,
         [product.title, product.price, product.barCode],
         (_, result) => {
           resolve();
         },
         (_, error) => {
-          console.log("Error!!!");
           reject(error);
         }
       );
@@ -53,6 +50,7 @@ export function fetchProducts() {
         [],
         (_, result) => {
           const products = [];
+
           for (const dp of result.rows._array) {
             products.push(new Product(dp.title, dp.price, dp.barCode, dp.id));
           }
