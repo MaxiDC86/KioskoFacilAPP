@@ -21,14 +21,12 @@ function Productos() {
 
   return (
     <View>
-      <Text> Productos !!!!!</Text>
       <FlatList
         data={loadedProducts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Text>
-            {item.title}
-            {item.barCode}
+            Nombre: {item.title} Precio: {item.price} Codigo: {item.barCode}
           </Text>
         )}
       />
