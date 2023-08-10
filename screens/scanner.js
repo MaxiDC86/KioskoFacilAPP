@@ -1,12 +1,23 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { insertProduct, fetchProducts } from "../util/database";
+import { Product } from "../model/product";
 
 function Scanner() {
   const navigation = useNavigation();
 
   function scannerHandler() {
+    const product = new Product("Alfajor", 500, 12341234, 1);
+
+    insertProduct(product);
+    getProducts();
     navigation.navigate("Venta Actual");
+  }
+
+  async function getProducts() {
+    const products = await fetchProducts();
+    console.log(products);
   }
   return (
     <View style={styles.container}>
