@@ -26,7 +26,7 @@ function Productos() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Text>
-            Nombre: {item.title} Precio: {item.price} Codigo: {item.barCode}
+            Nombre: {item.title} ${item.price} Cod: {item.barCode}
           </Text>
         )}
       />
