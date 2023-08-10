@@ -65,6 +65,29 @@ export function fetchProducts() {
   });
   return promise;
 }
+export function fetchBarCode(barcode) {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * FROM products WHERE barcode = ?`,
+        [barcode],
+        (_, result) => {
+          const products = [];
+
+          for (const dp of result.rows._array) {
+            products.push(new Product(dp.title, dp.price, dp.barCode, dp.id));
+          }
+          resolve(products);
+        },
+        (_, error) => {
+          console.log("Error!!!");
+          reject(error);
+        }
+      );
+    });
+  });
+  return promise;
+}
 export function deleteProduct(id) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
