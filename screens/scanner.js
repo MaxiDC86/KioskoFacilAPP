@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
-
-function scannerHandler() {
-  console.log("scannerHandler");
-}
+import { useNavigation } from "@react-navigation/native";
 
 function Scanner() {
+  const navigation = useNavigation();
+
+  function scannerHandler() {
+    navigation.navigate("Venta Actual");
+  }
   return (
     <View style={styles.container}>
       <Text> ESCANEANDO PRODUCTO!!!</Text>

@@ -5,8 +5,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Operations from "./screens/operations";
-import Administrator from "./screens/administrator";
+import Productos from "./screens/productos";
 import Scanner from "./screens/scanner";
+import VentaActual from "./screens/ventaActual";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -14,9 +15,9 @@ const BottomTab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <BottomTab.Navigator>
-      <BottomTab.Screen name="Operaciones" component={Operations} />
+      <BottomTab.Screen name="OPERACIONES" component={Operations} />
       <BottomTab.Screen name="VENDER" component={Scanner} />
-      <BottomTab.Screen name="ADMIN" component={Administrator} />
+      <BottomTab.Screen name="PRODUCTOS" component={Productos} />
     </BottomTab.Navigator>
   );
 }
@@ -28,6 +29,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Kiosko Facíl" component={MyTabs} />
+          <Stack.Screen name="Venta Actual" component={VentaActual} />
+          <Stack.Screen name="Agregar Producto" component={Scanner} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
