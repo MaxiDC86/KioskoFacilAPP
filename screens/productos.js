@@ -14,7 +14,6 @@ function Productos() {
       setLoadedProducts(products);
     }
     if (isFocused) {
-      // setLoadedPlaces((curPlaces) => [...curPlaces, route.params.place]);
       getProducts();
     }
   }, [isFocused]);
@@ -26,7 +25,7 @@ function Productos() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Text>
-            Nombre: {item.title} ${item.price} Cod: {item.barCode}
+            {item.title} ${item.price} Cod: {item.barCode}
           </Text>
         )}
       />

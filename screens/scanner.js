@@ -34,14 +34,15 @@ function Scanner() {
   }
 
   // What happens when we can scan the bar code
-  const handleBarCodeScanned = ({ data }) => {
+  async function handleBarCodeScanned({ data }) {
     setScanned(true);
-    setText(data);
-    console.log(data);
-  };
+    const product = await fetchBarCode(parseInt(data));
+    setText(
+      product[0].title + " $" + product[0].price + " CG:" + product[0].barCode
+    );
+  }
   function productPressHandler() {
-    navigation.navigate("Venta Actual");
-    console.log("Producto elegido!!");
+    navigation.navigate("Venta Actual", { product: text });
   }
   function scanAgain() {
     setScanned(false);
@@ -71,7 +72,7 @@ function Scanner() {
           </View>
           <View style={styles.Button}>
             <Button
-              title={"VER / CREAR PRODUCTO"}
+              title={"AGREGAR A CARRITO"}
               onPress={productPressHandler}
               color="green"
             />
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
   },
   maintext: {
-    fontSize: 30,
+    fontSize: 20,
     margin: 20,
   },
   barcodebox: {

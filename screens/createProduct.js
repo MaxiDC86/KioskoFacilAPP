@@ -33,7 +33,7 @@ function CreateProduct() {
     navigation.navigate("PRODUCTOS");
   }
   async function borrarHandler() {
-    await deleteProduct(1);
+    await deleteProduct(8);
   }
 
   return (

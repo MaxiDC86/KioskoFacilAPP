@@ -3,8 +3,10 @@ import React from "react";
 import Button from "../UI/Button";
 import { useNavigation } from "@react-navigation/native";
 
-function VentaActual() {
+function VentaActual({ route }) {
   const navigation = useNavigation();
+
+  const product = route.params?.product;
 
   function buttonFinalizarHandler() {
     navigation.navigate("OPERACIONES");
@@ -16,27 +18,14 @@ function VentaActual() {
   return (
     <View>
       <ScrollView>
-        <View>
-          <Text> Lista de operaciones realizadas!!!!!</Text>
-          <Image
-            source={require("../images/alfajor-aguila.jpg")}
-            style={styles.logo}
-          />
-        </View>
-        <View>
-          <Text> Lista de operaciones realizadas!!!!!</Text>
-          <Image
-            source={require("../images/alfajor-aguila.jpg")}
-            style={styles.logo}
-          />
-        </View>
-        <View>
-          <Button onPress={buttonAgregarHandler}>Agregar producto.</Button>
-        </View>
-        <View>
-          <Button onPress={buttonFinalizarHandler}>Finalizar Compra.</Button>
-        </View>
+        <Text>{product}</Text>
       </ScrollView>
+      <View>
+        <Button onPress={buttonAgregarHandler}>Agregar producto.</Button>
+      </View>
+      <View>
+        <Button onPress={buttonFinalizarHandler}>Finalizar Compra.</Button>
+      </View>
     </View>
   );
 }
