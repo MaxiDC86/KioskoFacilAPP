@@ -57,7 +57,6 @@ export default function App() {
             name="Kiosko Facíl"
             component={MyTabs}
             options={({ navigation }) => ({
-              title: "Your New Product",
               headerRight: ({ tintColor }) => (
                 <IconButton
                   color={tintColor}
