@@ -11,6 +11,7 @@ function Scanner() {
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Codigo todavía no leido!");
   const [productRead, setProductRead] = useState(null);
+  const [qtyProduct, setQtyProduct] = useState(1);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
@@ -49,12 +50,21 @@ function Scanner() {
       price: productRead[0].price,
       barCode: productRead[0].barCode,
       id: productRead[0].id,
+      qty: qtyProduct,
     });
   }
   function scanAgain() {
     setScanned(false);
     setText("Codigo todavía no leido!");
   }
+  const plusHandler = () => {
+    setQtyProduct(qtyProduct + 1);
+  };
+  const minusHandler = () => {
+    if (qtyProduct > 1) {
+      setQtyProduct(qtyProduct - 1);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -84,6 +94,17 @@ function Scanner() {
               color="green"
             />
           </View>
+          <View style={styles.Buttons}>
+            <View>
+              <Text style={styles.cantidad}>X {qtyProduct} </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Button title={"+"} onPress={plusHandler} color="green" />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Button title={"-"} onPress={minusHandler} color="red" />
+            </View>
+          </View>
         </View>
       )}
     </View>
@@ -106,14 +127,17 @@ const styles = StyleSheet.create({
   },
   maintext: {
     fontSize: 20,
-    margin: 20,
+    margin: 10,
+  },
+  cantidad: {
+    fontSize: 30,
   },
   barcodebox: {
     alignItems: "center",
     justifyContent: "center",
     height: 300,
     width: 300,
-    marginTop: 40,
+    marginTop: 10,
     overflow: "hidden",
     borderRadius: 30,
     backgroundColor: "grey",
@@ -123,7 +147,16 @@ const styles = StyleSheet.create({
   },
   Button: {
     flex: 1,
-    marginTop: 15,
+    flexBasis: "column",
+    marginTop: 5,
+    marginBottom: 10,
+    justifyContent: "space-between",
+  },
+  Buttons: {
+    flex: 1,
+    flexDirection: "row",
+    marginTop: 5,
+    marginBottom: 10,
     justifyContent: "space-between",
   },
 });
