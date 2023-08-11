@@ -52,7 +52,11 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerBackVisible: false,
+          }}
+        >
           <Stack.Screen
             name="Kiosko Facíl"
             component={MyTabs}
