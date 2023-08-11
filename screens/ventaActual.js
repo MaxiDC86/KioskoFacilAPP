@@ -10,18 +10,33 @@ function VentaActual({ route }) {
   const [shoppingCart, setShoppingCart] = useState([]);
   const [totalShoppingCart, setTotalShoppingCart] = useState(0);
   const isFocused = useIsFocused();
+
+  //Parametros desde scanner.js
   const title = route.params?.title;
   const price = route.params?.price;
   const barCode = route.params?.barCode;
   const id = route.params?.id;
+  const qty = route.params?.qty;
 
   useEffect(() => {
     if (isFocused) {
-      setShoppingCart((curProducts) => [
-        ...curProducts,
-        new Product(title, price, barCode, id),
-      ]);
-      setTotalShoppingCart((curValue) => curValue + price);
+      var firstTime = true;
+      // Recorremos el array para ver si el producto ya esta cargado.
+      for (i = 0; i < shoppingCart.length; i++) {
+        if (shoppingCart[i].product.id == id) {
+          shoppingCart[i].qty = shoppingCart[i].qty + qty;
+          firstTime = false;
+        }
+      }
+      if (firstTime) {
+        // [{product: , qty: },[],[]]
+        setShoppingCart((curProducts) => [
+          ...curProducts,
+          { product: new Product(title, price, barCode, id), qty: qty },
+        ]);
+      }
+      firstTime = true;
+      setTotalShoppingCart((curValue) => curValue + price * qty);
     }
   }, [isFocused]);
 
@@ -37,10 +52,10 @@ function VentaActual({ route }) {
     <View>
       <FlatList
         data={shoppingCart}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.product.id}
         renderItem={({ item }) => (
           <Text style={styles.tag}>
-            {item.title} ${item.price}
+            {item.product.title} ${item.product.price} QTY:{item.qty}
           </Text>
         )}
       />
