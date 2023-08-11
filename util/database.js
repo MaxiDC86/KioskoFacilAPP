@@ -103,3 +103,18 @@ export function deleteProduct(id) {
   });
   return promise;
 }
+export function deleteAll() {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `DELETE FROM products`,
+        [],
+        (_, result) => {},
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+  return promise;
+}
