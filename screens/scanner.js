@@ -10,6 +10,7 @@ function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Codigo todavía no leido!");
+  const [productRead, setProductRead] = useState(null);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
@@ -40,9 +41,15 @@ function Scanner() {
     setText(
       product[0].title + " $" + product[0].price + " CG:" + product[0].barCode
     );
+    setProductRead(product);
   }
   function productPressHandler() {
-    navigation.navigate("Venta Actual", { product: text });
+    navigation.navigate("Venta Actual", {
+      title: productRead[0].title,
+      price: productRead[0].price,
+      barCode: productRead[0].barCode,
+      id: productRead[0].id,
+    });
   }
   function scanAgain() {
     setScanned(false);
