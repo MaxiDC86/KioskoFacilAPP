@@ -24,8 +24,8 @@ function Productos() {
         data={loadedProducts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Text>
-            {item.title} ${item.price} Cod: {item.barCode}
+          <Text style={styles.tag}>
+            {item.title} ${item.price} C:{item.barCode}
           </Text>
         )}
       />
@@ -35,4 +35,13 @@ function Productos() {
 
 export default Productos;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  tag: {
+    padding: 2,
+    margin: 5,
+    fontSize: 14,
+    borderRadius: 8,
+    borderStyle: "solid",
+    borderWidth: 1,
+  },
+});
