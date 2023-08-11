@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  FlatList,
+  Alert,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import Button from "../UI/Button";
 import { useNavigation } from "@react-navigation/native";
@@ -44,6 +51,22 @@ function VentaActual({ route }) {
     setShoppingCart([]);
     navigation.navigate("OPERACIONES");
   }
+  function buttonCancelHandler() {
+    Alert.alert("Cancelar Venta ActuaL?", "", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          setShoppingCart([]);
+          navigation.navigate("OPERACIONES");
+        },
+      },
+    ]);
+  }
 
   function buttonAgregarHandler() {
     navigation.navigate("Agregar Producto");
@@ -69,7 +92,10 @@ function VentaActual({ route }) {
         <Button onPress={buttonAgregarHandler}>Agregar producto.</Button>
       </View>
       <View>
-        <Button onPress={buttonFinalizarHandler}>Finalizar Compra.</Button>
+        <Button onPress={buttonFinalizarHandler}>Finalizar Venta.</Button>
+      </View>
+      <View>
+        <Button onPress={buttonCancelHandler}>Cancelar Venta.</Button>
       </View>
     </View>
   );
@@ -83,7 +109,9 @@ const styles = StyleSheet.create({
   },
   tag: {
     padding: 2,
-    margin: 5,
+    marginTop: 20,
+    marginLeft: 5,
+    paddingLeft: 5,
     fontSize: 16,
     borderRadius: 8,
     borderStyle: "solid",
