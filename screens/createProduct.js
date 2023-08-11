@@ -21,7 +21,7 @@ function CreateProduct() {
     setEnteredBarCode(enteredBarCode);
   }
 
-  async function crearHandler() {
+  async function createProduct() {
     const product = new Product(
       enteredTitle,
       parseInt(enteredPrice),
@@ -29,8 +29,27 @@ function CreateProduct() {
     );
 
     await insertProduct(product);
+  }
 
-    navigation.navigate("PRODUCTOS");
+  function crearHandler() {
+    Alert.alert(
+      "Confirma que los datos ingresados son corrector?",
+      "Nombre de producto: " + enteredTitle,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            createProduct();
+            navigation.navigate("PRODUCTOS");
+          },
+        },
+      ]
+    );
   }
   async function borrarHandler() {
     await deleteProduct(8);
