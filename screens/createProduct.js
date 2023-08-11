@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Product } from "../model/product";
 import Button from "../UI/Button";
-import { insertProduct, deleteProduct } from "../util/database";
+import { insertProduct, deleteProduct, deleteAll } from "../util/database";
 
 function CreateProduct() {
   const navigation = useNavigation();
@@ -35,6 +35,9 @@ function CreateProduct() {
   async function borrarHandler() {
     await deleteProduct(8);
   }
+  async function borrarTodoHandler() {
+    await deleteAll();
+  }
 
   return (
     <View>
@@ -49,6 +52,9 @@ function CreateProduct() {
       </View>
       <View>
         <Button onPress={borrarHandler}>Borrar producto.</Button>
+      </View>
+      <View>
+        <Button onPress={borrarTodoHandler}>Borrar todos los productos.</Button>
       </View>
     </View>
   );
