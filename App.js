@@ -10,6 +10,7 @@ import Productos from "./screens/productos";
 import Scanner from "./screens/scanner";
 import VentaActual from "./screens/ventaActual";
 import CreateProduct from "./screens/createProduct";
+import Details from "./screens/details";
 
 import IconButton from "./UI/IconButton";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -93,6 +94,7 @@ export default function App() {
           <Stack.Screen name="Venta Actual" component={VentaActual} />
           <Stack.Screen name="Agregar Producto" component={Scanner} />
           <Stack.Screen name="Crear Producto" component={CreateProduct} />
+          <Stack.Screen name="Details" component={Details} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

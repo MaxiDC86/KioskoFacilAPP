@@ -5,6 +5,7 @@ import {
   ScrollView,
   FlatList,
   Alert,
+  Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Button from "../UI/Button";
@@ -22,6 +23,7 @@ function VentaActual({ route }) {
   const title = route.params?.title;
   const price = route.params?.price;
   const barCode = route.params?.barCode;
+  const imageUri = route.params?.imageUri;
   const id = route.params?.id;
   const qty = route.params?.qty;
 
@@ -39,7 +41,10 @@ function VentaActual({ route }) {
         // [{product: , qty: },[],[]]
         setShoppingCart((curProducts) => [
           ...curProducts,
-          { product: new Product(title, price, barCode, id), qty: qty },
+          {
+            product: new Product(title, price, barCode, imageUri, id),
+            qty: qty,
+          },
         ]);
       }
       firstTime = true;
@@ -77,9 +82,15 @@ function VentaActual({ route }) {
         data={shoppingCart}
         keyExtractor={(item) => item.product.id}
         renderItem={({ item }) => (
-          <Text style={styles.tag}>
-            {item.product.title} ${item.product.price} QTY:{item.qty}
-          </Text>
+          <View>
+            <Text style={styles.tag}>
+              {item.product.title} ${item.product.price} QTY:{item.qty}
+            </Text>
+            <Image
+              style={styles.logo}
+              source={{ uri: item.product.imageUri }}
+            />
+          </View>
         )}
       />
       <View>
@@ -123,8 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   logo: {
-    width: 150,
-    height: 150,
-    resizeMode: "stretch",
+    width: 50,
+    height: 40,
   },
 });

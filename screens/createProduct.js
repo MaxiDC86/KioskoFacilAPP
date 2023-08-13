@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Product } from "../model/product";
 import Button from "../UI/Button";
+import ImagePicker from "../UI/ImagePicker";
 import { insertProduct, deleteProduct, deleteAll } from "../util/database";
 
 function CreateProduct() {
@@ -10,6 +11,7 @@ function CreateProduct() {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredPrice, setEnteredPrice] = useState("");
   const [enteredBarCode, setEnteredBarCode] = useState("");
+  const [enteredImageUri, setEnteredImageUri] = useState("sin imagen");
 
   function changeTitleHandler(enteredTitle) {
     setEnteredTitle(enteredTitle);
@@ -20,12 +22,16 @@ function CreateProduct() {
   function changeBarCodeHandler(enteredBarCode) {
     setEnteredBarCode(enteredBarCode);
   }
+  function takeImageHandler(imageUri) {
+    setEnteredImageUri(imageUri);
+  }
 
   async function createProduct() {
     const product = new Product(
       enteredTitle,
       parseInt(enteredPrice),
-      parseInt(enteredBarCode)
+      parseInt(enteredBarCode),
+      enteredImageUri
     );
 
     await insertProduct(product);
@@ -34,7 +40,7 @@ function CreateProduct() {
   function crearHandler() {
     Alert.alert(
       "Confirma que los datos ingresados son corrector?",
-      "Nombre de producto: " + enteredTitle,
+      "Nombre: " + enteredTitle + " $" + enteredPrice + " CB:" + enteredBarCode,
       [
         {
           text: "Cancel",
@@ -66,6 +72,7 @@ function CreateProduct() {
       <TextInput onChangeText={changePriceHandler} value={enteredPrice} />
       <Text>Product Bar Code:</Text>
       <TextInput onChangeText={changeBarCodeHandler} value={enteredBarCode} />
+      <ImagePicker onTakeImage={takeImageHandler} />
       <View>
         <Button onPress={crearHandler}>Crear producto.</Button>
       </View>

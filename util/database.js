@@ -1,7 +1,7 @@
 import * as SQLite from "expo-sqlite";
 import { Product } from "../model/product";
 
-const database = SQLite.openDatabase("products.db");
+const database = SQLite.openDatabase("kiosko.db");
 
 export function init() {
   const promise = new Promise((resolve, reject) => {
@@ -11,7 +11,8 @@ export function init() {
                       id INTEGER PRIMARY KEY NOT NULL,
                       title TEXT NOT NULL,
                       price INTEGER NOT NULL,
-                      barcode INTEGER NOT NULL
+                      barCode INTEGER NOT NULL,
+                      imageUri TEXT 
                       )`,
         [],
         () => {
@@ -29,8 +30,8 @@ export function insertProduct(product) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO products (title,price,barCode)  VALUES (?,?,?)`,
-        [product.title, product.price, product.barCode],
+        `INSERT INTO products (title,price,barCode,imageUri)  VALUES (?,?,?,?)`,
+        [product.title, product.price, product.barCode, product.imageUri],
         (_, result) => {
           resolve();
         },
@@ -52,7 +53,9 @@ export function fetchProducts() {
           const products = [];
 
           for (const dp of result.rows._array) {
-            products.push(new Product(dp.title, dp.price, dp.barCode, dp.id));
+            products.push(
+              new Product(dp.title, dp.price, dp.barCode, dp.imageUri, dp.id)
+            );
           }
           resolve(products);
         },
@@ -69,13 +72,15 @@ export function fetchBarCode(barcode) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        `SELECT * FROM products WHERE barcode = ?`,
+        `SELECT * FROM products WHERE barCode = ?`,
         [barcode],
         (_, result) => {
           const products = [];
 
           for (const dp of result.rows._array) {
-            products.push(new Product(dp.title, dp.price, dp.barCode, dp.id));
+            products.push(
+              new Product(dp.title, dp.price, dp.barCode, dp.imageUri, dp.id)
+            );
           }
           resolve(products);
         },
@@ -107,7 +112,7 @@ export function deleteAll() {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        `DELETE FROM products`,
+        `DROP TABLE products`,
         [],
         (_, result) => {},
         (_, error) => {
