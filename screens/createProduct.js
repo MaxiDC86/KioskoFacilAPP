@@ -14,7 +14,8 @@ function CreateProduct({ route }) {
   const [enteredImageUri, setEnteredImageUri] = useState("sin imagen");
 
   useEffect(() => {
-    if (route.params.barCode != undefined) {
+    const barCode = route.params?.barCode;
+    if (barCode != undefined) {
       setEnteredBarCode(route.params.barCode.toString());
     }
   }, []);
@@ -72,12 +73,25 @@ function CreateProduct({ route }) {
 
   return (
     <View>
-      <Text>Product name:</Text>
-      <TextInput onChangeText={changeTitleHandler} value={enteredTitle} />
-      <Text>Product Price:</Text>
-      <TextInput onChangeText={changePriceHandler} value={enteredPrice} />
-      <Text>Product Bar Code:</Text>
-      <TextInput onChangeText={changeBarCodeHandler} value={enteredBarCode} />
+      <Text style={styles.text}>Producto name:</Text>
+      <TextInput
+        onChangeText={changeTitleHandler}
+        value={enteredTitle}
+        style={styles.textInput}
+      />
+      <Text style={styles.text}>Producto Price:</Text>
+      <TextInput
+        onChangeText={changePriceHandler}
+        value={enteredPrice}
+        style={styles.textInput}
+      />
+      <Text style={styles.text}>CODIGO DE BARRAS:</Text>
+      <TextInput
+        onChangeText={changeBarCodeHandler}
+        value={enteredBarCode}
+        keyboardType="numeric"
+        style={styles.textInput}
+      />
       <ImagePicker onTakeImage={takeImageHandler} />
       <View>
         <Button onPress={crearHandler}>Crear producto.</Button>
@@ -93,3 +107,15 @@ function CreateProduct({ route }) {
 }
 
 export default CreateProduct;
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 25,
+    marginLeft: 20,
+    marginTop: 10,
+  },
+  textInput: {
+    backgroundColor: "#dad7d7",
+    marginHorizontal: 20,
+  },
+});
