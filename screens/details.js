@@ -24,9 +24,9 @@ function Details({ route }) {
   }
   return (
     <View>
-      <Text>{title}</Text>
-      <Text>${price}</Text>
-      <Text>Codigo de barras:{barCode}</Text>
+      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text}>${price}</Text>
+      <Text style={styles.text}>Codigo de barras: {barCode}</Text>
       <Image
         style={styles.logo}
         source={{
@@ -41,8 +41,15 @@ function Details({ route }) {
 export default Details;
 
 const styles = StyleSheet.create({
+  text: {
+    fontSize: 20,
+    margin: 10,
+  },
   logo: {
     width: 300,
     height: 300,
+    marginLeft: 20,
+    marginTop: 20,
+    marginBottom: 20,
   },
 });

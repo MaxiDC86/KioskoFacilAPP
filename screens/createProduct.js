@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Product } from "../model/product";
 import Button from "../UI/Button";
-import ImagePicker from "../UI/ImagePicker";
+import ImagePic from "../UI/ImagePicker";
 import { insertProduct, deleteProduct, deleteAll } from "../util/database";
 
 function CreateProduct({ route }) {
@@ -92,7 +92,7 @@ function CreateProduct({ route }) {
         keyboardType="numeric"
         style={styles.textInput}
       />
-      <ImagePicker onTakeImage={takeImageHandler} />
+      <ImagePic onTakeImage={takeImageHandler} />
       <View>
         <Button onPress={crearHandler}>Crear producto.</Button>
       </View>

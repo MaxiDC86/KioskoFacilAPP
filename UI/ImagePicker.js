@@ -1,41 +1,41 @@
 import { View, Image, Text, StyleSheet } from "react-native";
-import { launchCameraAsync } from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 
 import OutlinedButton from "./OutlinedButton";
 
-function ImagePicker({ onTakeImage }) {
-  const [pickedImage, setPickedImage] = useState();
+function ImagePic({ onTakeImage }) {
+  const [image, setImage] = useState(null);
 
-  async function takeImageHandler() {
-    const image = await launchCameraAsync({
-      alignItems: true,
-      aspect: [16, 9],
-      quality: 0.1,
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
-    setPickedImage(image.uri);
-    onTakeImage(image.uri);
-  }
 
-  let imagePreview = <Text>No se ha tomado la foto todavía!</Text>;
-
-  if (pickedImage) {
-    imagePreview = (
-      <Image style={styles.image} source={{ uri: pickedImage }} w />
-    );
-  }
+    setImage(result.assets[0].uri);
+    onTakeImage(result.assets[0].uri);
+    if (!result.canceled) {
+      imagePreview = <Image style={styles.image} source={{ uri: image }} w />;
+    }
+  };
 
   return (
     <View>
-      <View style={styles.imagePreview}>{imagePreview}</View>
-      <OutlinedButton onPress={takeImageHandler} icon="camera">
+      {image && (
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      )}
+      <OutlinedButton onPress={pickImage} icon="camera">
         Tomar foto!
       </OutlinedButton>
     </View>
   );
 }
 
-export default ImagePicker;
+export default ImagePic;
 
 const styles = StyleSheet.create({
   imagePreview: {
