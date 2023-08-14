@@ -9,12 +9,15 @@ import { useIsFocused } from "@react-navigation/native";
 function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [productFound, setProductFound] = useState(false);
   const [text, setText] = useState("Codigo todavía no leido!");
   const [imagenProduct, setImagenProduct] = useState(
     "https://reactnative.dev/img/tiny_logo.png"
   );
   const [productRead, setProductRead] = useState(null);
   const [qtyProduct, setQtyProduct] = useState(1);
+  const [barCodeRead, setBarcodeRead] = useState(null);
+
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
@@ -42,11 +45,18 @@ function Scanner() {
   async function handleBarCodeScanned({ data }) {
     setScanned(true);
     const product = await fetchBarCode(parseInt(data));
-    setText(
-      product[0].title + " $" + product[0].price + " CG:" + product[0].barCode
-    );
-    setProductRead(product);
-    setImagenProduct(product[0].imageUri);
+    if (product[0] == undefined) {
+      setText("Producto con codigo " + parseInt(data) + " no encontrado!");
+      setProductFound(false);
+      setBarcodeRead(parseInt(data));
+    } else {
+      setProductFound(true);
+      setText(
+        product[0].title + " $" + product[0].price + " CG:" + product[0].barCode
+      );
+      setProductRead(product);
+      setImagenProduct(product[0].imageUri);
+    }
   }
   function productPressHandler() {
     navigation.navigate("Venta Actual", {
@@ -61,6 +71,7 @@ function Scanner() {
   function scanAgain() {
     setScanned(false);
     setText("Codigo todavía no leido!");
+    setImagenProduct("https://reactnative.dev/img/tiny_logo.png");
   }
   const plusHandler = () => {
     setQtyProduct(qtyProduct + 1);
@@ -70,10 +81,13 @@ function Scanner() {
       setQtyProduct(qtyProduct - 1);
     }
   };
+  function createProductHandler() {
+    navigation.navigate("Crear Producto", { barCode: barCodeRead });
+  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.barcodebox}>
+      <View style={scanned ? styles.barcodeboxScanned : styles.barcodebox}>
         {isFocused ? (
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -82,6 +96,14 @@ function Scanner() {
         ) : null}
       </View>
       <Text style={styles.maintext}>{text}</Text>
+      {scanned && !productFound && (
+        <View style={{ marginBottom: 80 }}>
+          <Button
+            title={"CREAR PRODUCTO NUEVO"}
+            onPress={createProductHandler}
+          />
+        </View>
+      )}
       {scanned && (
         <View style={styles.buttonsContainer}>
           <View>
@@ -99,24 +121,28 @@ function Scanner() {
               color="blue"
             />
           </View>
-          <View style={styles.Button}>
-            <Button
-              title={"AGREGAR A CARRITO"}
-              onPress={productPressHandler}
-              color="green"
-            />
-          </View>
-          <View style={styles.Buttons}>
-            <View>
-              <Text style={styles.cantidad}>X {qtyProduct} </Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Button title={"+"} onPress={plusHandler} color="green" />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Button title={"-"} onPress={minusHandler} color="red" />
-            </View>
-          </View>
+          {productFound && (
+            <>
+              <View style={styles.Button}>
+                <Button
+                  title={"AGREGAR A CARRITO"}
+                  onPress={productPressHandler}
+                  color="green"
+                />
+              </View>
+              <View style={styles.Buttons}>
+                <View>
+                  <Text style={styles.cantidad}>X {qtyProduct} </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Button title={"+"} onPress={plusHandler} color="green" />
+                </View>
+                <View style={{ flex: 1, marginLeft: 10 }}>
+                  <Button title={"-"} onPress={minusHandler} color="red" />
+                </View>
+              </View>
+            </>
+          )}
         </View>
       )}
     </View>
@@ -145,15 +171,26 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   barcodebox: {
-    alignItems: "center",
-    justifyContent: "center",
     height: 250,
     width: 250,
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 10,
     overflow: "hidden",
     borderRadius: 30,
     backgroundColor: "grey",
   },
+  barcodeboxScanned: {
+    height: 0,
+    width: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+    overflow: "hidden",
+    borderRadius: 30,
+    backgroundColor: "grey",
+  },
+
   buttonsContainer: {
     flex: 1,
   },
@@ -172,7 +209,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   logo: {
-    width: 40,
-    height: 40,
+    marginBottom: 30,
+    width: 200,
+    height: 200,
   },
 });
