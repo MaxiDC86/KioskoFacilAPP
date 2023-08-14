@@ -1,17 +1,23 @@
 import { StyleSheet, Text, View, Alert, TextInput } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Product } from "../model/product";
 import Button from "../UI/Button";
 import ImagePicker from "../UI/ImagePicker";
 import { insertProduct, deleteProduct, deleteAll } from "../util/database";
 
-function CreateProduct() {
+function CreateProduct({ route }) {
   const navigation = useNavigation();
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredPrice, setEnteredPrice] = useState("");
   const [enteredBarCode, setEnteredBarCode] = useState("");
   const [enteredImageUri, setEnteredImageUri] = useState("sin imagen");
+
+  useEffect(() => {
+    if (route.params.barCode != undefined) {
+      setEnteredBarCode(route.params.barCode.toString());
+    }
+  }, []);
 
   function changeTitleHandler(enteredTitle) {
     setEnteredTitle(enteredTitle);
