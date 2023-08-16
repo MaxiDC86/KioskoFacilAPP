@@ -18,10 +18,11 @@
     "expo-image-picker": "~14.3.2",
     "expo-sqlite": "~11.3.2",
     "expo-status-bar": "~1.6.0",
+    "expo-system-ui": "^2.4.0",
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-permissions": "^3.8.4",
-    "uglify-es": "^3.3.9",
+    "uglify-js": "^3.13.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
