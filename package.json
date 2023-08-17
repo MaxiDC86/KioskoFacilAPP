@@ -22,8 +22,10 @@
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-permissions": "^3.8.4",
+    "react-native-screens": "^3.24.0",
     "uglify-js": "^3.13.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "react-native-safe-area-context": "4.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
