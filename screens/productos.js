@@ -64,8 +64,9 @@ const styles = StyleSheet.create({
   },
   tag: {
     padding: 2,
-    margin: 2,
+    margin: 4,
     flexDirection: "row",
+    backgroundColor: "#19cfd2",
   },
   image: {
     borderBottomLeftRadius: 4,
@@ -76,5 +77,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     marginRight: 5,
+    color: "white",
   },
 });

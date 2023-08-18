@@ -1,17 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  FlatList,
-  Alert,
-  Image,
-} from "react-native";
+import { StyleSheet, Text, View, FlatList, Alert, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import Button from "../UI/Button";
 import { useNavigation } from "@react-navigation/native";
 import { Product } from "../model/product";
+import { Operation } from "../model/operation";
 import { useIsFocused } from "@react-navigation/native";
+import { insertOperation } from "../util/database";
 
 function VentaActual({ route }) {
   const navigation = useNavigation();
@@ -52,7 +46,29 @@ function VentaActual({ route }) {
     }
   }, [isFocused]);
 
+  async function loadOperations(operationNumber) {
+    for (var i = 0; i < shoppingCart.length; i++) {
+      const operation = new Operation(
+        shoppingCart[i].product.title,
+        shoppingCart[i].product.price,
+        shoppingCart[i].product.barCode,
+        shoppingCart[i].product.imageUri,
+        shoppingCart[i].qty,
+        operationNumber
+      );
+      await insertOperation(operation);
+    }
+  }
+
   function buttonFinalizarHandler() {
+    var sec = new Date().getSeconds(); //To get the Current Seconds
+    var min = new Date().getMinutes(); //To get the Current Minutes
+    var hours = new Date().getHours(); //To get the Current Hours
+    var date = new Date().getDate(); //To get the Current Date
+    var month = new Date().getMonth() + 1; //To get the Current Month
+    const operationNumber =
+      sec + "" + min + "" + hours + "" + date + "" + month;
+    loadOperations(operationNumber);
     setShoppingCart([]);
     navigation.navigate("OPERACIONES");
   }
