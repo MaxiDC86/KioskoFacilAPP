@@ -14,7 +14,7 @@ import Details from "./screens/details";
 
 import IconButton from "./UI/IconButton";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { init } from "./util/database";
+import { init, init_operations } from "./util/database";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -63,6 +63,7 @@ function MyTabs() {
 
 export default function App() {
   const [dbInitialized, setDbInitialized] = useState(false);
+  const [dbInitialized2, setDbInitialized2] = useState(false);
 
   useEffect(() => {
     init()
@@ -72,9 +73,16 @@ export default function App() {
       .catch((err) => {
         console.log(err);
       });
+    init_operations()
+      .then(() => {
+        setDbInitialized2(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
-  if (!dbInitialized) {
+  if (!dbInitialized || !dbInitialized2) {
     return (
       <View>
         <Text>Loading!!!!</Text>
