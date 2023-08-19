@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -98,7 +98,19 @@ export default function App() {
             headerBackVisible: false,
           }}
         >
-          <Stack.Screen name="Kiosko Facíl" component={MyTabs} />
+          <Stack.Screen
+            name="Kiosko Facíl"
+            component={MyTabs}
+            options={{
+              headerRight: () => (
+                <Image
+                  style={{ marginRight: 20, width: 80, height: 50 }}
+                  source={require("./assets/icon.png")}
+                  resizeMode="contain"
+                />
+              ),
+            }}
+          />
           <Stack.Screen name="Venta Actual" component={VentaActual} />
           <Stack.Screen name="Agregar Producto" component={Scanner} />
           <Stack.Screen name="Crear Producto" component={CreateProduct} />
