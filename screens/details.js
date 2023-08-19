@@ -71,7 +71,7 @@ function Details({ route }) {
       </View>
       <Text style={styles.text}>Codigo de barras: {barCode}</Text>
       <Image
-        style={styles.logo}
+        style={styles.imagenProducto}
         source={{
           uri: imagen,
         }}
@@ -89,11 +89,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 10,
   },
-  logo: {
+  imagenProducto: {
     width: 300,
     height: 300,
     marginLeft: 20,
     marginTop: 20,
     marginBottom: 20,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "black",
   },
 });
