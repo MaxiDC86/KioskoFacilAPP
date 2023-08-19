@@ -108,17 +108,10 @@ function Scanner() {
         <View style={styles.buttonsContainer}>
           <View>
             <Image
-              style={styles.logo}
+              style={styles.imagenProducto}
               source={{
                 uri: imagenProduct,
               }}
-            />
-          </View>
-          <View style={styles.Button}>
-            <Button
-              title={"¿Escanear nuevamente?"}
-              onPress={() => scanAgain()}
-              color="blue"
             />
           </View>
           {productFound && (
@@ -140,6 +133,13 @@ function Scanner() {
                 <View style={{ flex: 1, marginLeft: 10 }}>
                   <Button title={"-"} onPress={minusHandler} color="red" />
                 </View>
+              </View>
+              <View style={styles.Button}>
+                <Button
+                  title={"¿Escanear nuevamente?"}
+                  onPress={() => scanAgain()}
+                  color="blue"
+                />
               </View>
             </>
           )}
@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
   },
   maintext: {
-    fontSize: 20,
-    margin: 10,
+    fontSize: 30,
+    margin: 2,
   },
   cantidad: {
     fontSize: 30,
@@ -197,20 +197,23 @@ const styles = StyleSheet.create({
   Button: {
     flex: 1,
     flexBasis: "column",
-    marginTop: 5,
+    marginTop: 1,
     marginBottom: 10,
     justifyContent: "space-between",
   },
   Buttons: {
     flex: 1,
     flexDirection: "row",
-    marginTop: 5,
+    marginTop: 1,
     marginBottom: 10,
     justifyContent: "space-between",
   },
-  logo: {
+  imagenProducto: {
     marginBottom: 30,
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 300,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "black",
   },
 });
