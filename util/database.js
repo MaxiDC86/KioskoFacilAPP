@@ -94,6 +94,26 @@ export function fetchBarCode(barcode) {
   });
   return promise;
 }
+export function updateProduct(id, title, price, barCode, imageUri) {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `UPDATE products SET title = ?, price = ?,barCode = ?, imageUri = ? WHERE id = ?`,
+        [title, price, barCode, imageUri, id],
+        (_, result) => {
+          resolve(true);
+        },
+        (_, error) => {
+          console.log("Error durante update");
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+}
+
 export function deleteProduct(id) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
