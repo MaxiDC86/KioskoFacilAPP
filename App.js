@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -84,8 +84,8 @@ export default function App() {
 
   if (!dbInitialized || !dbInitialized2) {
     return (
-      <View>
-        <Text>Loading!!!!</Text>
+      <View style={styles.activityIndicator}>
+        <ActivityIndicator size="large" />
       </View>
     );
   }
@@ -115,5 +115,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  activityIndicator: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
+    marginTop: 350,
   },
 });
