@@ -91,7 +91,7 @@ export default function App() {
   }
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="light" backgroundColor="black" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
